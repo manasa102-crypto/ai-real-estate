@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الرسائل</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #f4f5f7; padding: 20px; }
+        h2 { color: #e60000; margin-bottom: 20px; text-align: center; }
+        .msg { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .time { font-size: 11px; color: #888; float: left; }
+        .back-btn { display: block; text-align: center; margin-top: 20px; color: #555; text-decoration: none; font-size: 14px; font-weight: bold; }
+        /* تنسيق خاص للرسائل المرسلة من العقارات */
+        .new-msg { border-right: 5px solid #28a745; }
+    </style>
+</head>
+<body>
+
+    <h2>✉️ مركز الرسائل والإشعارات</h2>
+
+    <!-- منطقة عرض الرسائل الجديدة المرسلة من داخل التطبيق -->
+    {% for msg in messages %}
+    <div class="msg new-msg">
+        <span class="time">الآن</span>
+        <strong>رسالة بخصوص: {{ msg.prop_title }}</strong>
+        <p>{{ msg.content }}</p>
+    </div>
+    {% endfor %}
+
+    <!-- الرسائل القديمة (التي كانت لديك بالفعل) -->
+    <div class="msg">
+        <span class="time">منذ ساعتين</span>
+        <strong>خدمة العملاء</strong>
+        <p>مرحباً بك! تم استلام طلب استشارتك العقارية وسيتواصل معك المختص قريباً.</p>
+    </div>
+    
+    <div class="msg">
+        <span class="time">أمس</span>
+        <strong>النظام الآلي</strong>
+        <p>تم تحديث أسعار العقارات في منطقة دبي الجديدة.</p>
+    </div>
+
+    <a href="/" class="back-btn">← العودة للرئيسية</a>
+
+</body>
+</html>
