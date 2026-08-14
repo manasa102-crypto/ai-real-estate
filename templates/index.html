@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>منصة عقارات الذكاء الاصطناعي</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
+        body { background-color: #f8fafc; padding-bottom: 90px; color: #1e293b; }
+        
+        .app-header { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        .header-brand { display: flex; align-items: center; gap: 12px; }
+        .app-logo { font-size: 24px; background: rgba(255,255,255,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
+        .app-title { font-size: 16px; font-weight: bold; }
+        .app-subtitle { font-size: 10px; color: #94a3b8; }
+        
+        .user-mini-profile { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 20px; text-decoration: none; color: white; font-size: 12px; font-weight: bold; }
+        .mini-avatar { width: 26px; height: 26px; border-radius: 50%; background: #6366f1; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+        .main-actions { padding: 0 15px; margin-bottom: 15px; display: flex; gap: 10px; }
+        .btn-toggle-search { flex: 1; background: #ffffff; color: #6366f1; border: 2px solid #6366f1; padding: 12px; border-radius: 10px; font-weight: bold; font-size: 14px; cursor: pointer; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .add-btn { flex: 1; background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); display: flex; align-items: center; justify-content: center; }
+
+        /* شريط البحث الذكي الصوتي */
+        .ai-search-bar { background: #eff6ff; padding: 12px; border-radius: 12px; margin: 0 15px 15px; border: 1px solid #bfdbfe; }
+        .ai-search-bar h4 { font-size: 13px; color: #1e40af; margin-bottom: 6px; }
+        .ai-search-row { display: flex; gap: 8px; }
+        .ai-search-row input { flex: 1; padding: 9px; border: 1px solid #93c5fd; border-radius: 8px; font-size: 12px; background: #fff; }
+        .ai-search-row button { background: #2563eb; color: white; border: none; padding: 9px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        .search-box { background: white; padding: 20px; margin: 0 15px 15px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: none; border: 1px solid #e2e8f0; }
+        .search-box h3 { margin-bottom: 15px; color: #6366f1; font-size: 15px; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 12px; color: #64748b; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: Tahoma, sans-serif; background: #f8fafc; font-size: 13px; }
+        .row { display: flex; gap: 10px; }
+        .col { flex: 1; }
+        .btn-submit-search { background: #1e293b; color: white; width: 100%; padding: 11px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 14px; }
+
+        .properties-container { padding: 0 15px; }
+        .section-heading { margin-bottom: 12px; font-size: 15px; font-weight: bold; color: #334155; display: flex; justify-content: space-between; align-items: center; }
+        
+        .card { background: white; padding: 16px; margin-bottom: 15px; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .card-title { font-size: 16px; font-weight: bold; color: #0f172a; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .badge { font-size: 11px; background: #e0e7ff; padding: 4px 10px; border-radius: 20px; color: #4f46e5; font-weight: bold; }
+        
+        .card-details { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; background: #f8fafc; padding: 10px; border-radius: 8px; font-size: 13px; color: #475569; }
+        .card-desc { font-size: 13px; color: #64748b; margin-bottom: 12px; line-height: 1.5; background: #f8fafc; padding: 10px; border-radius: 8px; border-right: 3px solid #6366f1; }
+        
+        .smart-advisor { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 10px; margin-bottom: 12px; }
+        .smart-advisor h4 { font-size: 13px; color: #166534; margin-bottom: 6px; }
+        .smart-advisor p { font-size: 12px; color: #15803d; margin-bottom: 4px; }
+        .btn-alert { background: #16a34a; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+
+        /* صندوق المزايا الجديدة (مؤشر السوق وتكلفة التشطيب) */
+        .extra-ai-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 10px; margin-bottom: 12px; font-size: 12px; color: #334155; }
+        .extra-ai-box div { margin-bottom: 6px; }
+
+        .contact-form { display: flex; gap: 8px; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+        .contact-form input { flex: 1; padding: 9px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 12px; }
+        .contact-form button { background: #10b981; color: white; border: none; padding: 9px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.08); z-index: 1000; border-top: 1px solid #f1f5f9; }
+        .nav-item { text-decoration: none; color: #94a3b8; font-size: 11px; text-align: center; font-weight: bold; }
+        .nav-item.active { color: #6366f1; }
+        .nav-item span { display: block; font-size: 18px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        <div class="header-brand">
+            <div class="app-logo">🤖</div>
+            <div>
+                <div class="app-title">PropAI Studio</div>
+                <div class="app-subtitle">منصة العقارات الذكية</div>
+            </div>
+        </div>
+        <a href="/profile" class="user-mini-profile">
+            <div class="mini-avatar">👤</div>
+            <span>مستثمر عقاري</span>
+        </a>
+    </div>
+
+    <!-- أزرار الواجهة -->
+    <div class="main-actions">
+        <button type="button" class="btn-toggle-search" onclick="toggleSearchBox()">🔍 بحث ذكي متقدم</button>
+        <a href="/add_property" class="add-btn">✨ إضافة عقار AI</a>
+    </div>
+
+    <!-- صندوق المساعد الصوتي والذكي -->
+    <div class="ai-search-bar">
+        <h4>🎙️ المساعد الصوتي والذكي</h4>
+        <div class="ai-search-row">
+            <input type="text" id="aiQueryInput" placeholder="اكتب طلبك باللغة العادية (مثلاً: عايز شقة فخمة فى التجمع)...">
+            <button onclick="runAiSearch()">بحث AI</button>
+        </div>
+    </div>
+
+    <!-- صندوق البحث المتقدم -->
+    <div class="search-box" id="searchBox">
+        <h3>⚡ محرك الفلاتر المتقدم</h3>
+        <form method="POST">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>نوع الطلب:</label>
+                        <select name="search_type"><option value="buy">شراء</option><option value="rent">إستئجار</option></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>نوع العقار:</label>
+                        <select name="prop_type"><option value="الكل">الكل</option><option value="شقة">شقة</option><option value="فيلا">فيلا</option><option value="بنت هاوس">بنت هاوس</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>الموقع:</label>
+                <input type="text" name="location" placeholder="التجمع الخامس، القاهرة">
+            </div>
+            <button type="submit" class="btn-submit-search">تطبيق الفلاتر</button>
+        </form>
+    </div>
+
+    <!-- قسم العقارات -->
+    <div class="properties-container">
+        <div class="section-heading">
+            <span>🏠 العقارات الحصرية</span>
+            <span style="font-size: 11px; color: #6366f1;">محدث ذكياً</span>
+        </div>
+        
+        {% for prop in properties %}
+        <div class="card">
+            <div class="card-title">
+                <span>{{ prop.title }}</span>
+                <span class="badge">{{ prop.type }}</span>
+            </div>
+            
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">📍 <strong>الموقع:</strong> {{ prop.location }}</p>
+            
+            <div class="card-details">
+                <div>💰 البيع: <strong>{{ prop.price }} ج</strong></div>
+                <div>🏢 الإيجار: <strong>{{ prop.rent }} ج/شهر</strong></div>
+                <div style="grid-column: span 2;">📐 المساحة: <strong>{{ prop.area }} م²</strong></div>
+            </div>
+
+            <div class="card-desc">{{ prop.description }}</div>
+            
+            <!-- مؤشر السوق وتوقعات التشطيب -->
+            <div class="extra-ai-box">
+                <div>📊 <strong>مؤشر السوق:</strong> {{ prop.trend.status }} ({{ prop.trend.growth_rate }})</div>
+                <div style="color: #6366f1;">💡 <strong>نصيحة AI:</strong> {{ prop.trend.advice }}</div>
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 6px; margin-top: 6px;">
+                    🛠️ <strong>توقعات تكلفة التشطيب (سوبر لوكس):</strong> {{ prop.reno_cost }} جنيه مصري تقريباً
+                </div>
+            </div>
+
+            <!-- المستشار الذكي وتنبيهات الأسعار -->
+            <div class="smart-advisor">
+                <h4>📊 تحليل المستشار العقاري الذكي</h4>
+                <p>📈 نسبة العائد السنوي المتوقع (ROI): <strong>{{ prop.roi }}%</strong></p>
+                <p>📍 الخدمات المحيطة: مستشفى (5 دقائق) - مدرسة (10 دقائق) - مول (5 دقائق)</p>
+                <button class="btn-alert" onclick="alert('تم تفعيل التنبيه بنجاح!')">🔔 تفعيل تنبيهات السعر</button>
+            </div>
+
+            <form action="/messages" method="POST" class="contact-form">
+                <input type="text" name="message_content" placeholder="تواصل مع المعلن فوراً..." required>
+                <button type="submit">إرسال 💬</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- الشريط السفلي للتنقل -->
+    <div class="bottom-nav">
+        <a href="/" class="nav-item active"><span>🏠</span>الرئيسية</a>
+        <a href="/offers" class="nav-item"><span>🏷️</span>العروض</a>
+        <a href="/messages" class="nav-item"><span>💬</span>الرسائل</a>
+        <a href="/profile" class="nav-item"><span>👤</span>صفحتي</a>
+        <a href="/more" class="nav-item"><span>☰</span>المزيد</a>
+    </div>
+
+    <script>
+        function toggleSearchBox() {
+            var box = document.getElementById("searchBox");
+            box.style.display = (box.style.display === "none" || box.style.display === "") ? "block" : "none";
+        }
+
+        function runAiSearch() {
+            let q = document.getElementById('aiQueryInput').value;
+            if(!q) { alert('الرجاء كتابة طلبك أولاً!'); return; }
+            fetch('/api/ai-search', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({query: q})
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+            });
+        }
+    </script>
+</body>
+</html>
